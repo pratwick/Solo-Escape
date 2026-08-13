@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1711">
+<meta name="description" content="Solo Escape — quiet places, meaningful journeys and slow travel inspiration.">
+<title>Solo Escape — Places Worth Disappearing To</title>
+
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#132018;
+  --deep:#09120d;
+  --paper:#f4f0e8;
+  --cream:#fbf9f4;
+  --muted:#77786f;
+  --line:rgba(19,32,24,.12);
+  --lime:#dce7b9;
+  --accent:#30452b;
+  --white:#fff;
+  --radius:24px;
+  --serif:"Playfair Display",Georgia,serif;
+  --sans:"DM Sans",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+img{display:block;width:100%;object-fit:cover}
+::selection{background:#cbd8a9;color:#172116}
+
+/* NAV */
+.nav{
+  position:fixed;z-index:50;top:0;left:0;right:0;
+  padding:12px 14px;
+  transition:.35s ease;
+}
+.nav.scrolled{background:rgba(9,18,13,.86);backdrop-filter:blur(18px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.nav-inner{height:58px;display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:auto}
+.logo{font-family:var(--serif);font-style:italic;font-size:25px;color:white;line-height:.8;letter-spacing:-1px}
+.logo small{display:block;font-family:var(--sans);font-style:normal;font-size:6px;letter-spacing:2.5px;text-transform:uppercase;text-align:center;margin-top:7px;opacity:.75}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.icon-btn,.menu-btn{
+  border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.18);color:white;
+  width:42px;height:42px;border-radius:50%;display:grid;place-items:center
+}
+.menu-btn{width:auto;padding:0 15px;border-radius:99px;display:flex;gap:8px;font-size:12px}
+.desktop-links{display:none}
+
+/* HERO */
+.hero{min-height:100svh;position:relative;color:#fff;display:flex;align-items:flex-end;overflow:hidden;background:#122016}
+.hero-bg{position:absolute;inset:0;background:
+linear-gradient(180deg,rgba(3,9,5,.35),rgba(3,9,5,.2) 35%,rgba(3,9,5,.9) 100%),
+url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=88") center/cover}
+.hero-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.38),transparent 75%)}
+.hero-content{position:relative;width:100%;padding:0 22px 38px;max-width:900px}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:13px}
+.eyebrow:after{content:"";width:32px;height:1px;background:currentColor;opacity:.65}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(48px,15vw,92px);line-height:.91;letter-spacing:-3px;margin:0 0 20px;max-width:720px}
+.hero h1 em{font-weight:500}
+.hero-copy{font-size:14px;line-height:1.7;max-width:410px;color:rgba(255,255,255,.82);margin-bottom:24px}
+.cta-row{display:flex;gap:9px;flex-wrap:wrap}
+.btn{border:0;border-radius:99px;padding:14px 19px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:10px}
+.btn-light{background:#fff;color:var(--ink)}
+.btn-ghost{color:#fff;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.08)}
+.hero-stats{
+  margin-top:34px;padding:14px 10px;display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid rgba(255,255,255,.2);background:rgba(5,12,8,.38);backdrop-filter:blur(12px);border-radius:18px
+}
+.hero-stat{text-align:center;border-right:1px solid rgba(255,255,255,.15);font-size:9px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.68)}
+.hero-stat:last-child{border:0}
+.hero-stat b{display:block;font-size:15px;color:#fff;margin-bottom:4px;letter-spacing:0}
+
+/* GENERAL */
+.section{padding:62px 18px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:22px}
+.kicker{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#68705f;margin-bottom:7px}
+.section h2{font-family:var(--serif);font-weight:500;font-size:34px;line-height:1.05;letter-spacing:-1px;margin:0}
+.view-all{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--ink);padding-bottom:3px}
+
+/* HORIZONTAL CARDS */
+.horizontal{display:flex;gap:12px;overflow-x:auto;margin-right:-18px;padding-right:18px;scrollbar-width:none;scroll-snap-type:x mandatory}
+.horizontal::-webkit-scrollbar{display:none}
+.escape-card{min-width:70vw;height:355px;border-radius:22px;overflow:hidden;position:relative;scroll-snap-align:start}
+.escape-card img{height:100%;transition:transform .7s}
+.escape-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(5,12,8,.82))}
+.escape-card-content{position:absolute;z-index:2;bottom:20px;left:17px;right:17px;color:#fff}
+.card-icon{width:35px;height:35px;border:1px solid rgba(255,255,255,.45);border-radius:50%;display:grid;place-items:center;margin-bottom:12px;font-size:14px}
+.escape-card h3{font-family:var(--serif);font-size:22px;font-weight:500;margin:0 0 4px}
+.escape-card p{font-size:10px;opacity:.72;margin:0}
+
+/* FEATURED JOURNEY */
+.journey-wrap{background:#eae5da;padding:10px;border-radius:26px}
+.journey-feature{position:relative;min-height:430px;border-radius:20px;overflow:hidden;color:#fff}
+.journey-feature img{position:absolute;inset:0;height:100%}
+.journey-feature:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.78))}
+.journey-info{position:absolute;z-index:2;bottom:24px;left:20px;right:20px}
+.tag{display:inline-flex;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.18);backdrop-filter:blur(8px);padding:7px 10px;border-radius:99px;font-size:8px;text-transform:uppercase;letter-spacing:1.3px;margin-bottom:12px}
+.journey-info h3{font-family:var(--serif);font-size:34px;line-height:1.02;font-weight:500;margin:0 0 9px;letter-spacing:-1px}
+.journey-info p{font-size:11px;line-height:1.6;color:rgba(255,255,255,.76);max-width:390px;margin:0 0 15px}
+
+/* STORIES */
+.story-grid{display:grid;gap:12px}
+.story{background:#faf8f2;border-radius:20px;overflow:hidden;border:1px solid var(--line);transition:transform .3s}
+.story:hover{transform:translateY(-4px)}
+.story img{height:210px}
+.story-body{padding:16px}
+.story-meta{font-size:8px;letter-spacing:1.2px;text-transform:uppercase;color:#777;margin-bottom:8px}
+.story h3{font-family:var(--serif);font-size:22px;line-height:1.12;font-weight:500;margin:0 0 8px}
+.story p{font-size:11px;line-height:1.6;color:#6d7069;margin:0}
+
+/* IMMERSIVE */
+.immersive{margin:0 18px;background:var(--deep);color:#fff;border-radius:28px;padding:28px 18px 18px;overflow:hidden}
+.immersive-head{margin-bottom:22px}
+.immersive h2{font-size:34px}
+.immersive .kicker{color:#aab596}
+.experience-list{display:grid;gap:10px}
+.experience{height:230px;border-radius:20px;position:relative;overflow:hidden}
+.experience img{height:100%}
+.experience:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(0,0,0,.78))}
+.experience-content{position:absolute;z-index:2;bottom:17px;left:16px;right:16px}
+.experience h3{font-family:var(--serif);font-size:23px;margin:0 0 3px;font-weight:500}
+.experience p{font-size:10px;color:#d8d9d1;margin:0}
+
+
+
+/* FOUND IT GAME */
+.foundit{margin:62px 18px;background:#f0eadf;border:1px solid var(--line);border-radius:28px;padding:28px 18px;overflow:hidden;position:relative}
+.foundit:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:#dce7b9;right:-100px;top:-90px;opacity:.65}
+.foundit-head{position:relative;z-index:1;margin-bottom:22px}
+.foundit .kicker{color:#68705f}
+.foundit h2{font-family:var(--serif);font-weight:500;font-size:36px;line-height:1.02;letter-spacing:-1.2px;margin:0 0 10px;max-width:620px}
+.foundit-intro{font-size:11px;line-height:1.65;color:#666b61;max-width:540px;margin:0}
+.foundit-top{position:relative;z-index:1;display:grid;gap:14px;margin-bottom:18px}
+.foundit-model{background:var(--deep);color:#fff;border-radius:22px;padding:18px;min-height:190px;display:flex;align-items:flex-end;position:relative;overflow:hidden}
+.foundit-model:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 25%,rgba(220,231,185,.22),transparent 35%),linear-gradient(145deg,#16251a,#08100b)}
+.model-shape{position:absolute;left:18%;top:24px;width:170px;height:105px;border-radius:24px 24px 42px 42px;background:linear-gradient(160deg,#7d8c68,#30452b);transform:skew(-8deg);box-shadow:0 18px 35px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12)}
+.model-shape:before{content:"LONAVALA";position:absolute;left:18px;bottom:16px;font-size:9px;letter-spacing:2px;color:#eef4dc;font-weight:700}
+.model-shape:after{content:"▲  ◼  ●  ≋";position:absolute;right:14px;top:18px;font-size:12px;color:#dce7b9;letter-spacing:3px}
+.model-copy{position:relative;z-index:2}
+.model-copy span{font-size:8px;text-transform:uppercase;letter-spacing:1.7px;color:#aeb8a5}
+.model-copy b{display:block;font-family:var(--serif);font-size:24px;font-weight:500;margin-top:3px}
+.foundit-score{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px}
+.score-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.score-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#77786f;font-weight:700}
+.score-value{font-family:var(--serif);font-size:25px}
+.progress{height:8px;background:#e7e3da;border-radius:99px;overflow:hidden}
+.progress-bar{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s ease}
+.score-meta{display:flex;justify-content:space-between;margin-top:9px;font-size:9px;color:#77786f}
+.mission-list{position:relative;z-index:1;display:grid;gap:10px}
+.mission{background:#fff;border:1px solid var(--line);border-radius:20px;padding:15px;display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;transition:.25s ease}
+.mission.done{background:#e8edd9;border-color:rgba(48,69,43,.18)}
+.mission-number{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#e9e5db;font-size:10px;font-weight:700;color:#596052}
+.mission.done .mission-number{background:var(--ink);color:#fff}
+.mission-copy small{display:block;font-size:8px;text-transform:uppercase;letter-spacing:1.3px;color:#85877e;margin-bottom:4px}
+.mission-copy b{font-family:var(--serif);font-size:17px;font-weight:500;display:block;margin-bottom:4px}
+.mission-copy p{font-size:9px;line-height:1.45;color:#77786f;margin:0}
+.mission-btn{border:0;background:var(--ink);color:#fff;border-radius:99px;padding:10px 12px;font-size:9px;font-weight:700;white-space:nowrap}
+.mission.done .mission-btn{background:#68745d}
+.foundit-actions{position:relative;z-index:1;display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.foundit-btn{border:0;border-radius:99px;padding:13px 16px;background:var(--ink);color:#fff;font-size:10px;font-weight:700}
+.foundit-btn.secondary{background:transparent;color:var(--ink);border:1px solid rgba(19,32,24,.2)}
+.share-note{font-size:9px;color:#77786f;line-height:1.5;margin:12px 0 0;position:relative;z-index:1}
+.foundit-modal{position:fixed;inset:0;z-index:100;background:rgba(5,12,8,.72);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}
+.foundit-modal.open{display:flex}
+.modal-card{width:min(520px,100%);background:var(--paper);border-radius:26px;padding:20px;box-shadow:0 20px 70px rgba(0,0,0,.3)}
+.modal-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:14px}
+.modal-head h3{font-family:var(--serif);font-size:26px;font-weight:500;margin:0}
+.close-modal{border:0;background:#e6e2d8;border-radius:50%;width:34px;height:34px;font-size:18px}
+.photo-upload{border:1.5px dashed rgba(19,32,24,.25);border-radius:18px;padding:20px;text-align:center;background:#faf8f2}
+.photo-upload input{width:100%;font-size:10px}
+.photo-preview{margin-top:12px;border-radius:14px;overflow:hidden;display:none}
+.photo-preview img{max-height:260px;object-fit:cover}
+.caption-box{margin-top:12px;background:#e9e5db;border-radius:15px;padding:12px;font-size:10px;line-height:1.6;white-space:pre-wrap}
+.modal-actions{display:flex;gap:8px;margin-top:12px}
+@media(min-width:600px){
+  .foundit{margin-left:35px;margin-right:35px;padding:35px}
+  .foundit-top{grid-template-columns:1.2fr .8fr}
+}
+@media(min-width:900px){
+  .foundit{max-width:1250px;margin:100px auto 0;padding:45px}
+  .foundit h2{font-size:48px}
+  .foundit-top{grid-template-columns:1.1fr .9fr}
+  .mission-list{grid-template-columns:1fr 1fr}
+  .mission{min-height:126px}
+}
+
+/* FIND ESCAPE */
+.find{margin:62px 18px 0;background:#dfe7c8;border-radius:28px;padding:26px 20px}
+.find h2{font-size:34px}
+.find p{font-size:12px;line-height:1.6;color:#5e6655}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.choice{border:1px solid rgba(19,32,24,.18);background:rgba(255,255,255,.28);border-radius:99px;padding:11px 13px;font-size:10px}
+.choice.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.result{background:rgba(255,255,255,.55);border-radius:18px;padding:10px;display:flex;gap:12px;align-items:center}
+.result img{width:90px;height:80px;border-radius:13px}
+.result b{font-family:var(--serif);font-size:18px;font-weight:500;display:block}
+.result span{font-size:9px;color:#6b7165}
+
+/* JOURNAL */
+.journal{padding-top:70px}
+.journal-list{border-top:1px solid var(--line)}
+.journal-item{display:grid;grid-template-columns:78px 1fr;gap:13px;padding:15px 0;border-bottom:1px solid var(--line);align-items:center}
+.journal-item img{width:78px;height:78px;border-radius:14px}
+.journal-item .date{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:#85857d}
+.journal-item h3{font-family:var(--serif);font-size:17px;font-weight:500;line-height:1.15;margin:5px 0 0}
+
+/* NEWSLETTER */
+.newsletter{margin:0 18px 62px;background:#ece8dd;border:1px solid var(--line);border-radius:26px;padding:27px 20px;text-align:center}
+.newsletter h2{font-size:31px}
+.newsletter p{font-size:11px;color:#6d7069;line-height:1.6}
+.form{display:flex;background:#fff;border:1px solid var(--line);border-radius:99px;padding:4px;margin-top:18px}
+.form input{min-width:0;flex:1;border:0;outline:0;background:transparent;padding:10px 12px;font-size:11px}
+.form button{border:0;background:var(--ink);color:#fff;border-radius:99px;padding:11px 15px;font-size:10px;font-weight:700}
+
+/* FOOTER */
+footer{background:var(--deep);color:#fff;padding:42px 20px calc(28px + env(safe-area-inset-bottom))}
+.footer-logo{font-family:var(--serif);font-style:italic;font-size:31px}
+.footer-tag{font-size:10px;color:#a9b0a4;line-height:1.6;max-width:230px;margin:9px 0 25px}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.footer-col h4{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#8f988d;margin:0 0 10px}
+.footer-col a{display:block;font-size:10px;color:#d1d4ce;margin:8px 0}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:30px;padding-top:16px;font-size:8px;color:#737c72;display:flex;justify-content:space-between;gap:10px}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(25px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* TABLET */
+@media(min-width:600px){
+  .nav{padding:15px 25px}
+  .hero-content{padding:0 42px 55px}
+  .section{padding:80px 35px}
+  .horizontal{margin-right:-35px;padding-right:35px}
+  .escape-card{min-width:280px}
+  .story-grid{grid-template-columns:repeat(2,1fr)}
+  .story img{height:240px}
+  .experience-list{grid-template-columns:repeat(3,1fr)}
+  .experience{height:320px}
+  .find,.newsletter{margin-left:35px;margin-right:35px}
+  .immersive{margin-left:35px;margin-right:35px;padding:35px}
+}
+
+/* DESKTOP */
+@media(min-width:900px){
+  .nav{padding:18px 38px}
+  .desktop-links{display:flex;gap:24px;align-items:center;color:rgba(255,255,255,.86);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+  .desktop-links a:hover{color:#fff}
+  .menu-btn{display:none}
+  .nav-inner{height:54px}
+  .hero{min-height:100vh}
+  .hero-content{padding:0 7vw 70px}
+  .hero h1{font-size:clamp(68px,7.5vw,116px)}
+  .hero-copy{font-size:15px}
+  .hero-stats{max-width:720px}
+  .section{max-width:1250px;margin:auto;padding:100px 50px}
+  .section h2{font-size:46px}
+  .escape-card{min-width:240px;height:390px}
+  .journey-wrap{padding:12px}
+  .journey-feature{min-height:590px}
+  .journey-info{left:40px;bottom:40px;max-width:570px}
+  .journey-info h3{font-size:52px}
+  .story-grid{grid-template-columns:repeat(3,1fr)}
+  .story:nth-child(1){grid-column:span 2}
+  .story:nth-child(1) img{height:330px}
+  .story img{height:240px}
+  .immersive{max-width:1250px;margin:0 auto;padding:45px}
+  .experience-list{gap:15px}
+  .experience{height:370px}
+  .find,.newsletter{max-width:1250px;margin-left:auto;margin-right:auto}
+  .find{padding:42px}
+  .journal-list{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+  footer{padding:55px max(50px,calc((100vw - 1200px)/2))}
+  .footer-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* REDUCED MOTION */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">Solo Escape<small>Journey · Inward</small></a>
+    <nav class="desktop-links">
+      <a href="#destinations">Destinations</a>
+      <a href="#journeys">Journeys</a>
+      <a href="#experiences">Experiences</a>
+      <a href="#journal">Journal</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="Search" onclick="document.querySelector('#destinations').scrollIntoView({behavior:'smooth'})">⌕</button>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">Menu <span>☰</span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Escape · Explore · Find Yourself</div>
+    <h1>Places worth <em>disappearing to.</em></h1>
+    <p class="hero-copy">Solo travel guides, hidden destinations, spiritual escapes and meaningful journeys — curated for people who want to feel a place, not just visit it.</p>
+    <div class="cta-row">
+      <a href="#destinations" class="btn btn-light">Find your escape <span>↗</span></a>
+      <a href="#journeys" class="btn btn-ghost">Watch the journey <span>▷</span></a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><b>52+</b>stories</div>
+      <div class="hero-stat"><b>24</b>escapes</div>
+      <div class="hero-stat"><b>∞</b>moments</div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="destinations">
+  <div class="section-head">
+    <div><div class="kicker">Curated for you</div><h2>Popular escapes</h2></div>
+    <a class="view-all" href="#find">View all →</a>
+  </div>
+  <div class="horizontal">
+    <a class="escape-card" href="#journeys"><img loading="lazy" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=82" alt="Mountain landscape"><div class="escape-card-content"><div class="card-icon">⌁</div><h3>Mountain Getaways</h3><p>18 guides · high above ordinary</p></div></a>
+    <a class="escape-card" href="#journeys"><img loading="lazy" src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=82" alt="Forest lake"><div class="escape-card-content"><div class="card-icon">♧</div><h3>Nature Escapes</h3><p>23 guides · slow down outside</p></div></a>
+    <a class="escape-card" href="#journeys"><img loading="lazy" src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=82" alt="Temple"><div class="escape-card-content"><div class="card-icon">✧</div><h3>Spiritual Places</h3><p>15 guides · journeys inward</p></div></a>
+    <a class="escape-card" href="#journeys"><img loading="lazy" src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=900&q=82" alt="Train through mountains"><div class="escape-card-content"><div class="card-icon">↝</div><h3>Train Journeys</h3><p>11 guides · the scenic way</p></div></a>
+    <a class="escape-card" href="#journeys"><img loading="lazy" src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=82" alt="Coastal sunset"><div class="escape-card-content"><div class="card-icon">☼</div><h3>Coastal Retreats</h3><p>14 guides · follow the tide</p></div></a>
+  </div>
+</section>
+
+<section class="section reveal" id="journeys">
+  <div class="section-head"><div><div class="kicker">Handpicked journeys</div><h2>Real stories from the road.</h2></div></div>
+  <div class="journey-wrap">
+    <article class="journey-feature">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1602309964830-7c4a9b0d1c6f?auto=format&fit=crop&w=1500&q=86" alt="Kerala backwaters">
+      <div class="journey-info">
+        <span class="tag">Featured · 5 min read</span>
+        <h3>3 Days in Alleppey: A Solo Escape into Calm</h3>
+        <p>Morning boats, quiet canals, local food and the kind of silence you carry home with you.</p>
+        <a href="#journal" class="btn btn-light">Read the journey →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-head"><div><div class="kicker">From the road</div><h2>More journeys</h2></div><a class="view-all" href="#journal">All stories →</a></div>
+  <div class="story-grid">
+    <article class="story"><img loading="lazy" src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1100&q=82" alt="Forest journey"><div class="story-body"><div class="story-meta">May 12 · Journey</div><h3>Coorg: Mist, Coffee & Quiet Mornings</h3><p>A slower way to spend a few days among green hills and rain.</p></div></article>
+    <article class="story"><img loading="lazy" src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=82" alt="Historic destination"><div class="story-body"><div class="story-meta">May 08 · Journey</div><h3>Udaipur: A Sunset That Stayed Forever</h3><p>Water, old stone and evenings that refuse to hurry.</p></div></article>
+    <article class="story"><img loading="lazy" src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=900&q=82" alt="Mountain valley"><div class="story-body"><div class="story-meta">Apr 28 · Escape</div><h3>Tirthan Valley: Where Time Slows Down</h3><p>A guide to finding stillness in the Himalayas.</p></div></article>
+  </div>
+</section>
+
+<section class="immersive reveal" id="experiences">
+  <div class="immersive-head"><div class="kicker">Beyond destinations</div><h2>Experiences that stay with you.</h2></div>
+  <div class="experience-list">
+    <article class="experience"><img loading="lazy" src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=900&q=82" alt="Mountain cabin"><div class="experience-content"><h3>Stay in Nature</h3><p>Handpicked stays that help you slow down.</p></div></article>
+    <article class="experience"><img loading="lazy" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=82" alt="Local food"><div class="experience-content"><h3>Local Experiences</h3><p>Taste the stories behind every place.</p></div></article>
+    <article class="experience"><img loading="lazy" src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=900&q=82" alt="Hiker in mountains"><div class="experience-content"><h3>Curated Itineraries</h3><p>Slow travel plans, crafted with care.</p></div></article>
+  </div>
+</section>
+
+
+
+<section class="foundit reveal" id="foundit">
+  <div class="foundit-head">
+    <div class="kicker">NEW · FOUND IT!</div>
+    <h2>Don't just visit a place. <em>Find it.</em></h2>
+    <p class="foundit-intro">Carry a miniature of your destination, discover the real places hidden inside it, complete photo missions and unlock your journey one location at a time.</p>
+  </div>
+
+  <div class="foundit-top">
+    <div class="foundit-model" aria-label="Lonavala destination model preview">
+      <div class="model-shape"></div>
+      <div class="model-copy"><span>Your travel model</span><b>Lonavala Explorer</b></div>
+    </div>
+    <div class="foundit-score">
+      <div class="score-row"><span class="score-label">Your adventure</span><span class="score-value" id="foundScore">0</span></div>
+      <div class="progress"><div class="progress-bar" id="foundProgress"></div></div>
+      <div class="score-meta"><span id="foundCount">0 / 5 found</span><span id="foundLevel">Beginner</span></div>
+    </div>
+  </div>
+
+  <div class="mission-list" id="missionList">
+    <article class="mission" data-place="Tiger Point" data-points="100">
+      <div class="mission-number">01</div>
+      <div class="mission-copy"><small>Mission 01</small><b>Tiger Point</b><p>Find the viewpoint where the valley opens beneath you.</p></div>
+      <button class="mission-btn" onclick="openFoundMission(this)">Find it</button>
+    </article>
+    <article class="mission" data-place="Bhushi Dam" data-points="100">
+      <div class="mission-number">02</div>
+      <div class="mission-copy"><small>Mission 02</small><b>Bhushi Dam</b><p>Find the famous monsoon stop where water flows over the steps.</p></div>
+      <button class="mission-btn" onclick="openFoundMission(this)">Find it</button>
+    </article>
+    <article class="mission" data-place="Lohagad Fort" data-points="100">
+      <div class="mission-number">03</div>
+      <div class="mission-copy"><small>Mission 03</small><b>Lohagad Fort</b><p>Find the historic hill fort rising above the surrounding landscape.</p></div>
+      <button class="mission-btn" onclick="openFoundMission(this)">Find it</button>
+    </article>
+    <article class="mission" data-place="Pawna Lake" data-points="100">
+      <div class="mission-number">04</div>
+      <div class="mission-copy"><small>Mission 04</small><b>Pawna Lake</b><p>Find the calm waters surrounded by hills and camping spots.</p></div>
+      <button class="mission-btn" onclick="openFoundMission(this)">Find it</button>
+    </article>
+    <article class="mission" data-place="Rajmachi" data-points="100">
+      <div class="mission-number">05</div>
+      <div class="mission-copy"><small>Mission 05</small><b>Rajmachi</b><p>Find the mountain fort region known for its dramatic trails and views.</p></div>
+      <button class="mission-btn" onclick="openFoundMission(this)">Find it</button>
+    </article>
+  </div>
+
+  <div class="foundit-actions">
+    <button class="foundit-btn" onclick="shareFoundIt()">Share my progress ↗</button>
+    <button class="foundit-btn secondary" onclick="resetFoundIt()">Reset game</button>
+  </div>
+  <p class="share-note">When you complete a mission, take a photo of the real place with your physical model and use “Share my progress” to create a ready-to-post FOUND IT! caption. Your browser may offer Instagram or other sharing options depending on your device.</p>
+</section>
+
+<div class="foundit-modal" id="foundModal" role="dialog" aria-modal="true" aria-labelledby="foundModalTitle">
+  <div class="modal-card">
+    <div class="modal-head"><h3 id="foundModalTitle">FOUND IT! 🔓</h3><button class="close-modal" onclick="closeFoundModal()" aria-label="Close">×</button></div>
+    <p id="modalMissionText" style="font-size:11px;line-height:1.6;color:#6d7069;margin:0 0 14px"></p>
+    <div class="photo-upload">
+      <b style="font-family:var(--serif);font-size:20px;font-weight:500;display:block;margin-bottom:5px">Match the model with the real place</b>
+      <span style="font-size:9px;color:#77786f;display:block;margin-bottom:12px">Upload your photo to complete the social challenge.</span>
+      <input type="file" id="foundPhoto" accept="image/*" onchange="previewFoundPhoto(event)">
+      <div class="photo-preview" id="photoPreview"><img id="photoPreviewImg" alt="Your FOUND IT photo"></div>
+    </div>
+    <div class="caption-box" id="foundCaption">FOUND IT! 🔓\nLonavala · Adventure unlocked\n#FoundIt #Lonavala #SoloEscape</div>
+    <div class="modal-actions">
+      <button class="foundit-btn" onclick="completeFoundMission()">Unlock mission</button>
+      <button class="foundit-btn secondary" onclick="copyFoundCaption()">Copy caption</button>
+    </div>
+  </div>
+</div>
+
+<section class="find reveal" id="find">
+  <div class="kicker">A little help choosing</div>
+  <h2>What kind of escape do you need?</h2>
+  <p>Tell us how you feel. We'll point you toward somewhere that might feel right.</p>
+  <div class="choices">
+    <button class="choice active" data-choice="silence">I need silence</button>
+    <button class="choice" data-choice="mountains">Take me higher</button>
+    <button class="choice" data-choice="water">I need the water</button>
+    <button class="choice" data-choice="spiritual">Find some peace</button>
+    <button class="choice" data-choice="adventure">Give me a story</button>
+  </div>
+  <div class="result">
+    <img id="resultImg" src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=500&q=80" alt="Recommended escape">
+    <div><span>Your escape</span><b id="resultTitle">Tirthan Valley</b><span id="resultText">Forest air · river mornings · 3–5 days</span></div>
+  </div>
+</section>
+
+<section class="section journal reveal" id="journal">
+  <div class="section-head"><div><div class="kicker">The journal</div><h2>Thoughts beyond destinations.</h2></div></div>
+  <div class="journal-list">
+    <a class="journal-item" href="#"><img loading="lazy" src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=300&q=80" alt=""><div><div class="date">May 10 · Reflection</div><h3>Why solo travel changes you</h3></div></a>
+    <a class="journal-item" href="#"><img loading="lazy" src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=300&q=80" alt=""><div><div class="date">May 06 · Slow travel</div><h3>The beauty of slow mornings</h3></div></a>
+    <a class="journal-item" href="#"><img loading="lazy" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=300&q=80" alt=""><div><div class="date">Apr 30 · Solo life</div><h3>Learning to be alone and happy</h3></div></a>
+    <a class="journal-item" href="#"><img loading="lazy" src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=300&q=80" alt=""><div><div class="date">Apr 25 · Perspective</div><h3>Collecting moments, not things</h3></div></a>
+  </div>
+</section>
+
+<section class="newsletter reveal">
+  <div class="kicker">Stay a little longer</div>
+  <h2>Escape into your inbox.</h2>
+  <p>Stories, guides and soulful travel inspiration — occasionally, never noisily.</p>
+  <form class="form" onsubmit="subscribe(event)">
+    <input type="email" placeholder="Your email address" required aria-label="Email address">
+    <button>Subscribe</button>
+  </form>
+  <div id="formMessage" style="font-size:9px;margin-top:10px;min-height:12px"></div>
+</section>
+</main>
+
+<footer id="about">
+  <div class="footer-logo">Solo Escape</div>
+  <p class="footer-tag">Escaping the noise, one journey at a time. Quiet places, meaningful stories and visual journeys.</p>
+  <div class="footer-grid">
+    <div class="footer-col"><h4>Explore</h4><a href="#destinations">Destinations</a><a href="#journeys">Journeys</a><a href="#experiences">Experiences</a><a href="#journal">Journal</a></div>
+    <div class="footer-col"><h4>Coming soon</h4><a href="#">Travel Guides</a><a href="#">Digital Journals</a><a href="#">Prints</a><a href="#">Shop</a></div>
+    <div class="footer-col"><h4>Resources</h4><a href="#">Solo Travel</a><a href="#">Packing</a><a href="#">Photography</a><a href="#">Travel Notes</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Email</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Solo Escape</span><span>Made for the ones who wander.</span></div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+const data={
+ silence:{title:"Tirthan Valley",text:"Forest air · river mornings · 3–5 days",img:"https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=500&q=80"},
+ mountains:{title:"Spiti Valley",text:"High roads · cold skies · 5–8 days",img:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=500&q=80"},
+ water:{title:"Alleppey",text:"Backwaters · slow boats · 2–4 days",img:"https://images.unsplash.com/photo-1602309964830-7c4a9b0d1c6f?auto=format&fit=crop&w=500&q=80"},
+ spiritual:{title:"Rishikesh",text:"River light · temples · inward days",img:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=500&q=80"},
+ adventure:{title:"Meghalaya",text:"Cloud forests · trails · 4–7 days",img:"https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=500&q=80"}
+};
+document.querySelectorAll('.choice').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+  document.querySelectorAll('.choice').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  const d=data[btn.dataset.choice];
+  document.getElementById('resultTitle').textContent=d.title;
+  document.getElementById('resultText').textContent=d.text;
+  document.getElementById('resultImg').src=d.img;
+ });
+});
+
+
+
+/* FOUND IT GAME */
+const FOUND_KEY='soloEscapeFoundItLonavala';
+let foundState=JSON.parse(localStorage.getItem(FOUND_KEY)||'[]');
+let activeMission=null;
+
+function saveFoundState(){localStorage.setItem(FOUND_KEY,JSON.stringify(foundState));}
+function updateFoundUI(){
+  const missions=[...document.querySelectorAll('.mission')];
+  const found=missions.filter(m=>foundState.includes(m.dataset.place));
+  const score=found.reduce((sum,m)=>sum+Number(m.dataset.points||0),0);
+  document.getElementById('foundScore').textContent=score;
+  document.getElementById('foundCount').textContent=`${found.length} / ${missions.length} found`;
+  document.getElementById('foundProgress').style.width=(found.length/missions.length*100)+'%';
+  document.getElementById('foundLevel').textContent=found.length===missions.length?'Lonavala Master':found.length>=3?'Adventurer':found.length>=1?'Explorer':'Beginner';
+  missions.forEach(m=>{
+    const done=foundState.includes(m.dataset.place);
+    m.classList.toggle('done',done);
+    const btn=m.querySelector('.mission-btn');
+    btn.textContent=done?'Found ✓':'Find it';
+  });
+}
+function openFoundMission(btn){
+  const card=btn.closest('.mission');
+  const place=card.dataset.place;
+  if(foundState.includes(place)){shareFoundIt(place);return;}
+  activeMission=place;
+  document.getElementById('modalMissionText').textContent=`You found ${place}! Now upload the photo you took with your Lonavala model. Then unlock the mission and share your FOUND IT! moment.`;
+  document.getElementById('foundCaption').textContent=`FOUND IT! 🔓\n${place}, Lonavala\nModel + real place = one adventure unlocked.\n#FoundIt #Lonavala #SoloEscape`;
+  document.getElementById('foundPhoto').value='';
+  document.getElementById('photoPreview').style.display='none';
+  document.getElementById('foundModal').classList.add('open');
+}
+function closeFoundModal(){document.getElementById('foundModal').classList.remove('open');activeMission=null}
+function previewFoundPhoto(e){
+  const file=e.target.files&&e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{document.getElementById('photoPreviewImg').src=ev.target.result;document.getElementById('photoPreview').style.display='block'};
+  reader.readAsDataURL(file);
+}
+function completeFoundMission(){
+  if(!activeMission)return;
+  if(!foundState.includes(activeMission))foundState.push(activeMission);
+  saveFoundState();
+  updateFoundUI();
+  const completed=foundState.length===5;
+  document.getElementById('modalMissionText').textContent=completed?'🏆 You found every Lonavala mission! You are a Lonavala Master.':'🔓 Mission unlocked! Your adventure is one step closer to complete.';
+  setTimeout(closeFoundModal,900);
+}
+async function copyFoundCaption(place){
+  const p=place||activeMission||'Lonavala';
+  const caption=`FOUND IT! 🔓\n${p}, Lonavala\nModel + real place = one adventure unlocked.\n#FoundIt #Lonavala #SoloEscape`;
+  try{await navigator.clipboard.writeText(caption);alert('Caption copied. Now paste it into your Instagram post or Story.')}catch(e){alert(caption)}
+}
+async function shareFoundIt(place){
+  const p=place||'Lonavala';
+  const caption=`FOUND IT! 🔓\n${p}, Lonavala\nModel + real place = one adventure unlocked.\n#FoundIt #Lonavala #SoloEscape`;
+  if(navigator.share){try{await navigator.share({title:'FOUND IT! — Solo Escape',text:caption});return}catch(e){}}
+  try{await navigator.clipboard.writeText(caption);alert('Your FOUND IT! caption was copied. Paste it into Instagram or your preferred social app.')}catch(e){alert(caption)}
+}
+function resetFoundIt(){
+  if(confirm('Reset your Lonavala FOUND IT! progress?')){foundState=[];saveFoundState();updateFoundUI()}
+}
+updateFoundUI();
+
+function subscribe(e){
+ e.preventDefault();
+ document.getElementById('formMessage').textContent="You're on the list. Welcome to the escape.";
+ e.target.reset();
+}
+document.getElementById('menuBtn').addEventListener('click',()=>{
+ alert("Mobile menu: Destinations · Journeys · Experiences · Journal · About");
+});
+</script>
+</body>
+</html>
